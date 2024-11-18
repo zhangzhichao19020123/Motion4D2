@@ -1,0 +1,231 @@
+<!DOCTYPE html>
+<!-- saved from url=(0099)file:///D:/paper/20210512/ICASSP/ICASSP2025/submit/websiteMotion4D240906/websiteMotion4D240906.html -->
+<html><head><meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+    <script>
+    window.dataLayer = window.dataLayer || [];
+    </script>
+
+    
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, shrink-to-fit=no">
+    <title>Customed Motion and Appearance for Text-to-4D Generation with Spatial-Temporal Slicing</title>
+    
+    <link rel="stylesheet" href="./index_files/bootstrap.min.css">
+    <link href="./index_files/css" rel="stylesheet" type="text/css">
+    <link rel="stylesheet" href="file:///D:/paper/20210512/ICASSP/ICASSP2025/submit/websiteMotion4D240906/4D-fy_%20Text-to-4D%20Generation%20Using%20Hybrid%20Score%20Distillation%20Sampling_files/Highlight-Clean.css">
+    <link rel="stylesheet" href="./index_files/styles.css">
+
+    <link rel="apple-touch-icon" sizes="180x180" href="https://sherwinbahmani.github.io/4dfy/apple-touch-icon.png">
+    <link rel="icon" type="image/png" sizes="32x32" href="https://sherwinbahmani.github.io/4dfy/data/favicon-32x32.png">
+    <link rel="icon" type="image/png" sizes="16x16" href="https://sherwinbahmani.github.io/4dfy/data/favicon-16x16.png">
+    <link rel="manifest" href="https://sherwinbahmani.github.io/4dfy/site.webmanifest">
+    <!-- <meta name="robots" content="noindex"> -->
+
+    <meta property="og:site_name" content="4D-fy">
+    <meta property="og:type" content="video.other">
+    <meta property="og:title" content="Customed Motion and Appearance for Text-to-4D Generation with Spatial-Temporal Slicing">
+    <meta property="og:description" content="Customed Motion and Appearance for Text-to-4D Generation with Spatial-Temporal Slicing">
+    <meta property="og:url" content="">
+
+</head>
+
+<body>
+    <div class="highlight-clean" style="padding-bottom: 0px; padding-top: 20px;">
+        <div class="container" style="max-width: 1024px; margin-bottom: 20px">
+            <h1 class="text-center" style="font-size:35px;">Customed Motion and Appearance for Text-to-4D Generation with Spatial-Temporal Slicing</h1>
+        </div>
+        <div class="container" style="max-width: 1024px; margin-bottom: 20px;">
+
+            <div class="container" style="max-width: 1024px; margin-bottom: 20px">
+                <h1 class="text-center" style="font-size:22px;"> </h1>
+            </div>
+        </div>
+        <div id="container">
+ 
+        </div>
+    </div>
+    <hr class="divider">
+
+    <hr class="divider">
+    <div class="container" style="max-width: 768px;">
+        <div class="row">
+            <div class="col-md-12">
+                <div class="row">
+                    <div class="col-sm-12">
+                        <h2>Abstract</h2>
+                    </div>
+                </div>
+                <p>
+                    Recent breakthroughs in text-to-4D generation rely on pre-trained text-to-image and text-to-video models to generate dynamic 3D scenes. However, current text-to-4D methods face a three-way tradeoff between the quality of scene appearance, 3D structure, and motion. For example, text-to-image models and their 3D-aware variants are trained on internet-scale image datasets and can be used to produce scenes with realistic appearance and 3D structure-but no motion. Text-to-video models are trained on relatively smaller video datasets and can produce scenes with motion, but poorer appearance and 3D structure. While these models have complementary strengths, they also have opposing weaknesses, making it difficult to combine them in a way that alleviates this three-way tradeoff. Here, we introduce hybrid score distillation sampling, an alternating optimization procedure that blends supervision signals from multiple pre-trained diffusion models and incorporates benefits of each for high-fidelity text-to-4D generation. Using hybrid SDS, we demonstrate synthesis of 4D scenes with compelling appearance, 3D structure, and motion.
+                </p>
+            </div>
+        </div>
+    </div>
+    <hr class="divider">
+    <div class="container" style="max-width: 768px;">
+        <div class="row">
+            <div class="col-sm-12">
+                <h2>Method</h2>
+            </div>
+        </div>
+        <div class="row captioned_videos">
+            <div class="col-md-12">
+                <p>
+                    A 4D radiance field is parameterized using a neural representation with a static and dynamic multiscale hash table of features. Images and videos are rendered from the representation using volume rendering, and we supervise the representation using hybrid score distillation sampling-a technique that combines gradients from multiple types of pre-trained diffusion models. In the first stage of training we use gradients from a 3D-aware text-to-image model (3D-T2I) to iteratively optimize a representation without the Janus problem. Next, we blend in gradient supervision using variational SDS with a text-to-image model (T2I) to improve the appearance (i.e., we alternate supervision between 3D and image models). In the last stage we incorporate gradients from a text-to-video model (T2V) to add motion to the scene, and we update the scene using the other models in an alternating fashion.
+                </p>
+                &nbsp;
+                <div class="compositional captioned_videos">
+                     <iframe src="./index_files/figMotion4D240913.pdf" style="width: 100%; height: 500px;" frameborder="0">
+                       This browser does not support PDFs. Please download the PDF to view it: 
+                      <a href="./index_files/figMotion4D240913.pdf">Download PDF</a>
+                     </iframe>
+                </div>
+            </div>
+        </div>
+    </div>
+    <hr class="divider">
+    <div class="container" style="max-width: 768px;">
+        <div class="row">
+            <div class="col-sm-12">
+                <h2>4D Generation</h2>
+            </div>
+        </div>
+        <div class="row captioned_videos">
+        <div class="col-6">
+            <div class="video-compare-container" style="width: 100%">
+                <video class="video lazy" id="ex0" loop="" playsinline="" autoplay="" muted="" src="data/videos/ours/best/robot3.mp4" onplay="resizeAndPlay(this)"></video>
+            </div>
+            <h6 class="caption">robot3</h6>
+        </div>
+        <div class="col-6">
+            <div class="video-compare-container" style="width: 100%">
+                <video class="video lazy" id="ex1" loop="" playsinline="" autoplay="" muted="" src="data/videos/ours/best/robot1.mp4" onplay="resizeAndPlay(this)"></video>
+            </div>
+            <h6 class="caption">robot1</h6>
+        </div>
+        </div>
+        <div class="row captioned_videos">
+            <div class="col-6">
+                <div class="video-compare-container" style="width: 100%">
+                    <video class="video lazy" id="ex2" loop="" playsinline="" autoplay="" muted="" src="data/videos/ours/best/alien3.mp4" onplay="resizeAndPlay(this)"></video>
+                </div>
+                <h6 class="caption">alien3</h6>
+            </div>
+            <div class="col-6">
+                <div class="video-compare-container" style="width: 100%">
+                    <video class="video lazy" id="ex3" loop="" playsinline="" autoplay="" muted="" src="data/videos/ours/best/alien5.mp4" onplay="resizeAndPlay(this)"></video>
+                </div>
+                <h6 class="caption">alien5</h6>
+            </div>
+        </div>
+        <div class="row captioned_videos">
+            <div class="col-6">
+                <div class="video-compare-container" style="width: 100%">
+                    <video class="video lazy" id="ex4" loop="" playsinline="" autoplay="" muted="" src="data/videos/ours/best/dinosaur4.mp4" onplay="resizeAndPlay(this)"></video>
+                </div>
+                <h6 class="caption">dinosaur4</h6>
+            </div>
+            <div class="col-6">
+                <div class="video-compare-container" style="width: 100%">
+                    <video class="video lazy" id="ex5" loop="" playsinline="" autoplay="" muted="" src="data/videos/ours/best/dinosaur3.mp4" onplay="resizeAndPlay(this)"></video>
+                </div>
+                <h6 class="caption">dinosaur3</h6>
+            </div>
+        </div>
+        <div class="row captioned_videos">
+            <div class="col-6">
+                <div class="video-compare-container" style="width: 100%">
+                    <video class="video lazy" id="ex6" loop="" playsinline="" autoplay="" muted="" src="data/videos/ours/best/panda4.mp4" onplay="resizeAndPlay(this)"></video>
+                </div>
+                <h6 class="caption">panda4</h6>
+            </div>
+            <div class="col-6">
+                <div class="video-compare-container" style="width: 100%">
+                    <video class="video lazy" id="ex7" loop="" playsinline="" autoplay="" muted="" src="data/videos/ours/best/panda1.mp4" onplay="resizeAndPlay(this)"></video>
+                </div>
+                <h6 class="caption">panda1</h6>
+            </div>
+        </div>
+
+    </div>
+
+    <hr class="divider">
+    <div class="container" style="max-width: 768px;">
+        <div class="row">
+            <div class="col-sm-12">
+                <h2>Comparisons with Dreamgaussian4D</h2>
+            </div>
+        </div>
+        <div class="row" style="margin-bottom: 0px;">
+            <div class="col-xs-2 compare-title  compare-title-sm">
+                <p>Dreamgaussian4D</p>
+            </div>
+            <div class="col-xs-2 compare-title">
+                <p>Ours</p>
+            </div>
+        </div>
+        <div class="row captioned_videos">
+            <div class="col-6">
+                <div class="video-compare-container" style="width: 100%">
+                    <video class="video lazy" id="mav3d2" loop="" playsinline="" autoplay="" muted="" src="data/videos/ours/it50000-test-middlemotion2.mp4" onplay="resizeAndPlay(this)"></video>
+                </div>
+            </div>
+            <div class="col-6">
+                <div class="video-compare-container" style="width: 100%">
+                    <video class="video lazy" id="mav3d3" loop="" playsinline="" autoplay="" muted="" src="data/videos/ours/it50000-test-largemotion1.mp4" onplay="resizeAndPlay(this)"></video>
+                </div>
+            </div>
+            <h6 class="caption">a volcano erupts</h6>
+        </div>
+        <div class="row captioned_videos">
+            <div class="col-6">
+                <div class="video-compare-container" style="width: 100%">
+                    <video class="video lazy" id="mav3d6" loop="" playsinline="" autoplay="" muted="" src="data/videos/ours/panda-it100000-test.mp4" onplay="resizeAndPlay(this)"></video>
+                </div>
+            </div>
+            <div class="col-6">
+                <div class="video-compare-container" style="width: 100%">
+                    <video class="video lazy" id="mav3d7" loop="" playsinline="" autoplay="" muted="" src="data/videos/ours/panda3.mp4" onplay="resizeAndPlay(this)"></video>
+                </div>
+            </div>
+            <h6 class="caption">a panda is lifting weights</h6>
+        </div>
+        <div class="row captioned_videos">
+            <div class="col-6">
+                <div class="video-compare-container" style="width: 100%">
+                    <video class="video lazy" id="mav3d8" loop="" playsinline="" autoplay="" muted="" src="data/videos/ours/it20000-test-smallmotion1.mp4" onplay="resizeAndPlay(this)"></video>
+                </div>
+            </div>
+            <div class="col-6">
+                <div class="video-compare-container" style="width: 100%">
+                    <video class="video lazy" id="mav3d9" loop="" playsinline="" autoplay="" muted="" src="data/videos/ours/dinousaurrunning.mp4" onplay="resizeAndPlay(this)"></video>
+                </div>
+            </div>
+            <h6 class="caption">a dinousaur is running</h6>
+        </div>
+    </div>
+
+    <hr class="divider">
+    <div class="container" style="max-width: 768px;">
+        <div class="row">
+ 
+
+        </div>
+    </div>
+    <hr class="divider">
+    <div class="container" style="max-width: 768px;">
+        <footer>
+            <p> Website template from <a href="https://dreamfusion3d.github.io/">DreamFusion</a> and <a href="https://mv-dream.github.io/">MVDream</a> . We thank the authors for the open-source code.</p>
+        </footer>
+    </div>
+    <script src="./index_files/yall.js.download"></script>
+    <script>
+        yall(
+            {
+                observeChanges: true
+            }
+        );
+    </script>
+
+
+
+</body></html>

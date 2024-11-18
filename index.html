@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<!-- saved from url=(0099)file:///D:/paper/20210512/ICASSP/ICASSP2025/submit/websiteMotion4D240906/websiteMotion4D240906.html -->
+
 <html><head><meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
     <script>
     window.dataLayer = window.dataLayer || [];
@@ -7,7 +7,7 @@
 
     
     <meta name="viewport" content="width=device-width, initial-scale=1.0, shrink-to-fit=no">
-    <title>Customed Motion and Appearance for Text-to-4D Generation with Spatial-Temporal Slicing</title>
+    <title>Motion4D: High-Consistency Text-to-4D Generation with Enhanced Motion Amplitude</title>
     
     <link rel="stylesheet" href="./index_files/bootstrap.min.css">
     <link href="./index_files/css" rel="stylesheet" type="text/css">
@@ -22,8 +22,8 @@
 
     <meta property="og:site_name" content="4D-fy">
     <meta property="og:type" content="video.other">
-    <meta property="og:title" content="Customed Motion and Appearance for Text-to-4D Generation with Spatial-Temporal Slicing">
-    <meta property="og:description" content="Customed Motion and Appearance for Text-to-4D Generation with Spatial-Temporal Slicing">
+    <meta property="og:title" content="Motion4D: High-Consistency Text-to-4D Generation with Enhanced Motion Amplitude">
+    <meta property="og:description" content="Motion4D: High-Consistency Text-to-4D Generation with Enhanced Motion Amplitude">
     <meta property="og:url" content="">
 
 </head>
@@ -31,7 +31,7 @@
 <body>
     <div class="highlight-clean" style="padding-bottom: 0px; padding-top: 20px;">
         <div class="container" style="max-width: 1024px; margin-bottom: 20px">
-            <h1 class="text-center" style="font-size:35px;">Customed Motion and Appearance for Text-to-4D Generation with Spatial-Temporal Slicing</h1>
+            <h1 class="text-center" style="font-size:35px;">Motion4D: High-Consistency Text-to-4D Generation with Enhanced Motion Amplitude</h1>
         </div>
         <div class="container" style="max-width: 1024px; margin-bottom: 20px;">
 
@@ -55,7 +55,9 @@
                     </div>
                 </div>
                 <p>
-                    Recent breakthroughs in text-to-4D generation rely on pre-trained text-to-image and text-to-video models to generate dynamic 3D scenes. However, current text-to-4D methods face a three-way tradeoff between the quality of scene appearance, 3D structure, and motion. For example, text-to-image models and their 3D-aware variants are trained on internet-scale image datasets and can be used to produce scenes with realistic appearance and 3D structure-but no motion. Text-to-video models are trained on relatively smaller video datasets and can produce scenes with motion, but poorer appearance and 3D structure. While these models have complementary strengths, they also have opposing weaknesses, making it difficult to combine them in a way that alleviates this three-way tradeoff. Here, we introduce hybrid score distillation sampling, an alternating optimization procedure that blends supervision signals from multiple pre-trained diffusion models and incorporates benefits of each for high-fidelity text-to-4D generation. Using hybrid SDS, we demonstrate synthesis of 4D scenes with compelling appearance, 3D structure, and motion.
+                    As multi-view 3D generation technology advancing, the extension of 3D generation into the 4D has emerged as a significant research. Existing approaches that render videos frame by frame and subsequently assemble them into 3D objects often fail to incorporate inter-frame constraints, leading to temporal inconsistencies in the generated 4D scenes. Moreover, the spatial inconsistencies commonly observed in multi-view generation are further amplified in 4D generation tasks.
+To address these challenges, we introduce a framework, Motion4D, designed to generate highly consistent 4D scenes from textual input, while optimizing generation quality through the enhancement of motion amplitude. This framework combines spatio-temporal slicing method for 4D scenes with 4D Gaussian rendering, enabling the precise capture of motion information across multiple temporal dimensions. To improve sampling flexibility, we also developed a spatio-temporal sliding window sampling method, which effectively capture multi-scale features, with the window size dynamically adjusted at various scales. 
+Furthermore, the 4D-Rotor Gaussian Splatting technique effectively encodes both spatial and temporal features into a more compact Gaussian point cloud representation. It enhances the precision of the generated data and provides a more detailed representation of motion amplitude, thus addressing the motion distortion issues commonly encountered in existing methods. Empirical results demonstrate that Motion4D significantly improves the authenticity and consistency of generated content in text-to-4D generation tasks, particularly in terms of motion representation and spatiotemporal coherence. This advancement achieves superior generation quality compared to conventional approaches.
                 </p>
             </div>
         </div>
@@ -70,11 +72,11 @@
         <div class="row captioned_videos">
             <div class="col-md-12">
                 <p>
-                    A 4D radiance field is parameterized using a neural representation with a static and dynamic multiscale hash table of features. Images and videos are rendered from the representation using volume rendering, and we supervise the representation using hybrid score distillation sampling-a technique that combines gradients from multiple types of pre-trained diffusion models. In the first stage of training we use gradients from a 3D-aware text-to-image model (3D-T2I) to iteratively optimize a representation without the Janus problem. Next, we blend in gradient supervision using variational SDS with a text-to-image model (T2I) to improve the appearance (i.e., we alternate supervision between 3D and image models). In the last stage we incorporate gradients from a text-to-video model (T2V) to add motion to the scene, and we update the scene using the other models in an alternating fashion.
+                    The T24D training pipeline utilizes a 4D diffusion process to generate temporally and spatially consistent animations. The pipeline begins with two primary datasets: a "Motion Dataset," which contains moving objects, and a "T24D Dataset" consisting of multi-view images of objects (e.g., horses or dinosaurs) paired with corresponding textual descriptions such as "A horse is running." To achieve diverse perspectives, the T24D Dataset is sampled across multiple views (front, side, overhead). The input is then processed by introducing noise, which is iteratively refined through the pipeline from \( Z_{n-1} \) to \( Z_n \), while incorporating view-conditioned information from the T24D samples. During diffusion training, the model uses CLIP (Contrastive Language–Image Pretraining) for text-image alignment and applies several attention mechanisms to enhance spatial and temporal coherence, including frame attention, view attention, Klotski self-attention, and motion-enhancement cross-attention. Spatial and temporal slicing techniques are employed to maintain coherence across frames and views, enabling the model to produce consistent motion dynamics in the generated outputs. This pipeline enables the generation of multi-view animations that align with text descriptions while preserving consistent motion across different perspectives and time steps.
                 </p>
                 &nbsp;
                 <div class="compositional captioned_videos">
-                     <iframe src="./index_files/figMotion4D240913.pdf" style="width: 100%; height: 500px;" frameborder="0">
+                     <iframe src="./index_files/22.pdf" style="width: 100%; height: 500px;" frameborder="0">
                        This browser does not support PDFs. Please download the PDF to view it: 
                       <a href="./index_files/figMotion4D240913.pdf">Download PDF</a>
                      </iframe>

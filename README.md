@@ -1,3 +1,102 @@
+# Motion4D: High-Consistency Text-to-4D Generation with Enhanced Motion Amplitude
+
+## Abstract
+
+As multi-view 3D generation technology advancing, the extension of 3D generation into the 4D has emerged as a significant research. Existing approaches that render videos frame by frame and subsequently assemble them into 3D objects often fail to incorporate inter-frame constraints, leading to temporal inconsistencies in the generated 4D scenes. Moreover, the spatial inconsistencies commonly observed in multi-view generation are further amplified in 4D generation tasks.
+To address these challenges, we introduce a framework, Motion4D, designed to generate highly consistent 4D scenes from textual input, while optimizing generation quality through the enhancement of motion amplitude. This framework combines spatio-temporal slicing method for 4D scenes with 4D Gaussian rendering, enabling the precise capture of motion information across multiple temporal dimensions. To improve sampling flexibility, we also developed a spatio-temporal sliding window sampling method, which effectively capture multi-scale features, with the window size dynamically adjusted at various scales. 
+Furthermore, the 4D-Rotor Gaussian Splatting technique effectively encodes both spatial and temporal features into a more compact Gaussian point cloud representation. It enhances the precision of the generated data and provides a more detailed representation of motion amplitude, thus addressing the motion distortion issues commonly encountered in existing methods. Empirical results demonstrate that Motion4D significantly improves the authenticity and consistency of generated content in text-to-4D generation tasks, particularly in terms of motion representation and spatiotemporal coherence. This advancement achieves superior generation quality compared to conventional approaches.
+
+## Method
+
+The T24D training pipeline utilizes a 4D diffusion process to generate temporally and spatially consistent animations. The pipeline begins with two primary datasets: a "Motion Dataset," which contains moving objects, and a "T24D Dataset" consisting of multi-view images of objects (e.g., horses or dinosaurs) paired with corresponding textual descriptions such as "A horse is running." To achieve diverse perspectives, the T24D Dataset is sampled across multiple views (front, side, overhead). The input is then processed by introducing noise, which is iteratively refined through the pipeline from \( Z_{n-1} \) to \( Z_n \), while incorporating view-conditioned information from the T24D samples. During diffusion training, the model uses CLIP (Contrastive Language–Image Pretraining) for text-image alignment and applies several attention mechanisms to enhance spatial and temporal coherence, including frame attention, view attention, Klotski self-attention, and motion-enhancement cross-attention. Spatial and temporal slicing techniques are employed to maintain coherence across frames and views, enabling the model to produce consistent motion dynamics in the generated outputs. This pipeline enables the generation of multi-view animations that align with text descriptions while preserving consistent motion across different perspectives and time steps.
+
+![Method Diagram](./index_files/22.pdf)
+
+## 4D Generation
+
+### Examples
+
+#### robot3
+
+![robot3](data/videos/ours/best/robot3.mp4)
+
+#### robot1
+
+![robot1](data/videos/ours/best/robot1.mp4)
+
+#### alien3
+
+![alien3](data/videos/ours/best/alien3.mp4)
+
+#### alien5
+
+![alien5](data/videos/ours/best/alien5.mp4)
+
+#### dinosaur4
+
+![dinosaur4](data/videos/ours/best/dinosaur4.mp4)
+
+#### dinosaur3
+
+![dinosaur3](data/videos/ours/best/dinosaur3.mp4)
+
+#### panda4
+
+![panda4](data/videos/ours/best/panda4.mp4)
+
+#### panda1
+
+![panda1](data/videos/ours/best/panda1.mp4)
+
+> **Note:** To play the videos, please ensure the video files are placed in the correct paths as specified.
+
+## Comparisons with Dreamgaussian4D
+
+### a volcano erupts
+
+**Dreamgaussian4D**
+
+![Dreamgaussian4D - Volcano](data/videos/ours/it50000-test-middlemotion2.mp4)
+
+**Ours**
+
+![Ours - Volcano](data/videos/ours/it50000-test-largemotion1.mp4)
+
+### a panda is lifting weights
+
+**Dreamgaussian4D**
+
+![Dreamgaussian4D - Panda](data/videos/ours/panda-it100000-test.mp4)
+
+**Ours**
+
+![Ours - Panda](data/videos/ours/panda3.mp4)
+
+### a dinosaur is running
+
+**Dreamgaussian4D**
+
+![Dreamgaussian4D - Dinosaur](data/videos/ours/it20000-test-smallmotion1.mp4)
+
+**Ours**
+
+![Ours - Dinosaur](data/videos/ours/dinousaurrunning.mp4)
+
+## Acknowledgments
+
+Website template from [DreamFusion](https://dreamfusion3d.github.io/) and [MVDream](https://mv-dream.github.io/). We thank the authors for the open-source code.
+
+
+
+
+
+
+
+
+
+
+
+
 ## Viusal Effects
 ### Displayments of the Motion4D Models
 Just open the file index.html to view the visual effects and introduction.

@@ -11,7 +11,7 @@ Furthermore, the 4D-Rotor Gaussian Splatting technique effectively encodes both 
 The T24D training pipeline utilizes a 4D diffusion process to generate temporally and spatially consistent animations. The pipeline begins with two primary datasets: a "Motion Dataset," which contains moving objects, and a "T24D Dataset" consisting of multi-view images of objects (e.g., horses or dinosaurs) paired with corresponding textual descriptions such as "A horse is running." To achieve diverse perspectives, the T24D Dataset is sampled across multiple views (front, side, overhead). The input is then processed by introducing noise, which is iteratively refined through the pipeline from \( Z_{n-1} \) to \( Z_n \), while incorporating view-conditioned information from the T24D samples. During diffusion training, the model uses CLIP (Contrastive Language–Image Pretraining) for text-image alignment and applies several attention mechanisms to enhance spatial and temporal coherence, including frame attention, view attention, Klotski self-attention, and motion-enhancement cross-attention. Spatial and temporal slicing techniques are employed to maintain coherence across frames and views, enabling the model to produce consistent motion dynamics in the generated outputs. This pipeline enables the generation of multi-view animations that align with text descriptions while preserving consistent motion across different perspectives and time steps.
 
 ![Method Diagram](./index_files/22.pdf)
-  <td><img src=./index_files/22.png></td>
+  <td><img src=./index_files/22.pdf></td>
 ## 4D Generation
 
 ### Examples
@@ -50,13 +50,13 @@ The T24D training pipeline utilizes a 4D diffusion process to generate temporall
 
 > **Note:** To play the videos, please ensure the video files are placed in the correct paths as specified.
 
-## Comparisons with Dreamgaussian4D
+## Comparisons with Motion4D
 
 ### a volcano erupts
 
-**Dreamgaussian4D**
+**Motion4D**
 
-![Dreamgaussian4D - Volcano](data/videos/ours/it50000-test-middlemotion2.mp4)
+![Motion4D - Volcano](data/videos/ours/it50000-test-middlemotion2.mp4)
 
 **Ours**
 
@@ -64,9 +64,9 @@ The T24D training pipeline utilizes a 4D diffusion process to generate temporall
 
 ### a panda is lifting weights
 
-**Dreamgaussian4D**
+**Motion4D**
 
-![Dreamgaussian4D - Panda](data/videos/ours/panda-it100000-test.mp4)
+![Motion4D - Panda](data/videos/ours/panda-it100000-test.mp4)
 
 **Ours**
 
@@ -74,9 +74,9 @@ The T24D training pipeline utilizes a 4D diffusion process to generate temporall
 
 ### a dinosaur is running
 
-**Dreamgaussian4D**
+**Motion4D**
 
-![Dreamgaussian4D - Dinosaur](data/videos/ours/it20000-test-smallmotion1.mp4)
+![Motion4D - Dinosaur](data/videos/ours/it20000-test-smallmotion1.mp4)
 
 **Ours**
 
@@ -108,8 +108,8 @@ Just open the file index.html to view the visual effects and introduction.
 
 ```shell
 # create virtual environment
-conda create -n motiondirector python=3.8
-conda activate motiondirector
+conda create -n Motion4D python=3.8
+conda activate Motion4D
 # install packages
 pip install -r requirements.txt
 ```
@@ -123,27 +123,27 @@ git clone https://huggingface.co/cerspense/zeroscope_v2_576w ./models/zeroscope_
 ## ModelScopeT2V
 git clone https://huggingface.co/damo-vilab/text-to-video-ms-1.7b ./models/model_scope/
 ```
-### Weights of trained MotionDirector <a name="download_weights"></a>
+### Weights of trained Motion4D <a name="download_weights"></a>
 ```shell
 # Make sure you have git-lfs installed (https://git-lfs.com)
 git lfs install
-git clone https://huggingface.co/ruizhaocv/MotionDirector_weights ./outputs
+git clone https://huggingface.co/ruizhaocv/Motion4D_weights ./outputs
 
-# More and better trained MotionDirector are released at a new repo:
-git clone https://huggingface.co/ruizhaocv/MotionDirector ./outputs
+# More and better trained Motion4D are released at a new repo:
+git clone https://huggingface.co/ruizhaocv/Motion4D ./outputs
 # The usage is slightly different, which will be updated later.
 ```
 
 ## Usage
 ### Training
 
-#### Train MotionDirector on multiple videos:
+#### Train Motion4D on multiple videos:
 ```bash
-python MotionDirector_train.py --config ./configs/config_multi_videos.yaml
+python Motion4D_train.py --config ./configs/config_multi_videos.yaml
 ```
-#### Train MotionDirector on a single video:
+#### Train Motion4D on a single video:
 ```bash
-python MotionDirector_train.py --config ./configs/config_single_video.yaml
+python Motion4D_train.py --config ./configs/config_single_video.yaml
 ```
 
 Note:  
@@ -156,22 +156,22 @@ make sure you replace the path to foundational model weights and training data w
 
 ### Inference
 ```bash
-python MotionDirector_inference.py --model /path/to/the/foundation/model  --prompt "Your prompt" --checkpoint_folder /path/to/the/trained/MotionDirector --checkpoint_index 300 --noise_prior 0.
+python Motion4D_inference.py --model /path/to/the/foundation/model  --prompt "Your prompt" --checkpoint_folder /path/to/the/trained/Motion4D --checkpoint_index 300 --noise_prior 0.
 ```
 Note: 
 - Replace `/path/to/the/foundation/model` with your own path to the foundation model, like ZeroScope.
 - The value of `checkpoint_index` means the checkpoint saved at which the training step is selected.
 - The value of `noise_prior` indicates how much the inversion noise of the reference video affects the generation. 
-We recommend setting it to `0` for MotionDirector trained on multiple videos to achieve the highest diverse generation, while setting it to `0.1~0.5` for MotionDirector trained on a single video for faster convergence and better alignment with the reference video.
+We recommend setting it to `0` for Motion4D trained on multiple videos to achieve the highest diverse generation, while setting it to `0.1~0.5` for Motion4D trained on a single video for faster convergence and better alignment with the reference video.
 
 
-## Inference with pre-trained MotionDirector
-All available weights are at official [Huggingface Repo](https://huggingface.co/ruizhaocv/MotionDirector_weights).
+## Inference with pre-trained Motion4D
+All available weights are at official [Huggingface Repo](https://huggingface.co/ruizhaocv/Motion4D_weights).
 Run the [download command](#download_weights), the weights will be downloaded to the folder `outputs`, then run the following inference command to generate videos.
 
-### MotionDirector trained on multiple videos:
+### Motion4D trained on multiple videos:
 ```bash
-python MotionDirector_inference.py --model /path/to/the/ZeroScope  --prompt "A person is riding a bicycle past the Eiffel Tower." --checkpoint_folder ./outputs/train/riding_bicycle/ --checkpoint_index 300 --noise_prior 0. --seed 7192280
+python Motion4D_inference.py --model /path/to/the/ZeroScope  --prompt "A person is riding a bicycle past the Eiffel Tower." --checkpoint_folder ./outputs/train/riding_bicycle/ --checkpoint_index 300 --noise_prior 0. --seed 7192280
 ```
 Note:  
 - Replace `/path/to/the/ZeroScope` with your own path to the foundation model, i.e. the ZeroScope.
@@ -180,23 +180,23 @@ Note:
 
 
 
-### MotionDirector trained on a single video:
+### Motion4D trained on a single video:
 16 frames:
 ```bash
-python MotionDirector_inference.py --model /path/to/the/ZeroScope  --prompt "A tank is running on the moon." --checkpoint_folder ./outputs/train/car_16/ --checkpoint_index 150 --noise_prior 0.5 --seed 8551187
+python Motion4D_inference.py --model /path/to/the/ZeroScope  --prompt "A tank is running on the moon." --checkpoint_folder ./outputs/train/car_16/ --checkpoint_index 150 --noise_prior 0.5 --seed 8551187
 ```
 
 
 24 frames:
 ```bash
-python MotionDirector_inference.py --model /path/to/the/ZeroScope  --prompt "A truck is running past the Arc de Triomphe." --checkpoint_folder ./outputs/train/car_24/ --checkpoint_index 150 --noise_prior 0.5 --width 576 --height 320 --num-frames 24 --seed 34543
+python Motion4D_inference.py --model /path/to/the/ZeroScope  --prompt "A truck is running past the Arc de Triomphe." --checkpoint_folder ./outputs/train/car_24/ --checkpoint_index 150 --noise_prior 0.5 --width 576 --height 320 --num-frames 24 --seed 34543
 ```
 
 
-## MotionDirector for Sports <a name="MotionDirector_for_Sports"></a>
+## Motion4D for Sports <a name="Motion4D_for_Sports"></a>
 
 ```bash
-python MotionDirector_inference.py --model /path/to/the/ZeroScope  --prompt "A panda is lifting weights in a garden." --checkpoint_folder ./outputs/train/lifting_weights/ --checkpoint_index 300 --noise_prior 0. --seed 9365597
+python Motion4D_inference.py --model /path/to/the/ZeroScope  --prompt "A panda is lifting weights in a garden." --checkpoint_folder ./outputs/train/lifting_weights/ --checkpoint_index 300 --noise_prior 0. --seed 9365597
 ```
 
 
@@ -208,47 +208,47 @@ More sports, to be continued ...
 
 
 
-## MotionDirector with Customized Appearance <a name="MotionDirector_with_Customized_Appearance"></a>
+## Motion4D with Customized Appearance <a name="Motion4D_with_Customized_Appearance"></a>
 ### Train
 Train the spatial path with reference images.
 ```bash
-python MotionDirector_train.py --config ./configs/config_multi_images.yaml
+python Motion4D_train.py --config ./configs/config_multi_images.yaml
 ```
 Then train the temporal path to learn the motions in reference videos.
 ```bash
-python MotionDirector_train.py --config ./configs/config_multi_videos.yaml
+python Motion4D_train.py --config ./configs/config_multi_videos.yaml
 ```
 
 ### Inference
 Inference with spatial path learned from reference images and temporal path learned form reference videos.
 ```bash
-python MotionDirector_inference_multi.py --model /path/to/the/foundation/model  --prompt "Your prompt" --spatial_path_folder /path/to/the/trained/MotionDirector/spatial/lora/ --temporal_path_folder /path/to/the/trained/MotionDirector/temporal/lora/ --noise_prior 0.
+python Motion4D_inference_multi.py --model /path/to/the/foundation/model  --prompt "Your prompt" --spatial_path_folder /path/to/the/trained/Motion4D/spatial/lora/ --temporal_path_folder /path/to/the/trained/Motion4D/temporal/lora/ --noise_prior 0.
 ```
 ### Example
 Download the pre-trained weights.
 ```bash
-git clone https://huggingface.co/ruizhaocv/MotionDirector ./outputs
+git clone https://huggingface.co/ruizhaocv/Motion4D ./outputs
 ```
 Run the following command.
 ```bash
-python MotionDirector_inference_multi.py --model /path/to/the/ZeroScope  --prompt "A Terracotta Warrior is riding a horse through an ancient battlefield." --spatial_path_folder ./outputs/train/customized_appearance/terracotta_warrior/checkpoint-default/spatial/lora --temporal_path_folder ./outputs/train/riding_horse/checkpoint-default/temporal/lora/ --noise_prior 0. --seed 1455028
+python Motion4D_inference_multi.py --model /path/to/the/ZeroScope  --prompt "A Terracotta Warrior is riding a horse through an ancient battlefield." --spatial_path_folder ./outputs/train/customized_appearance/terracotta_warrior/checkpoint-default/spatial/lora --temporal_path_folder ./outputs/train/riding_horse/checkpoint-default/temporal/lora/ --noise_prior 0. --seed 1455028
 ```
 Results are shown in the [table](#customize-both-appearance-and-motion-).
 
 ## More results
 
-If you have a more impressive MotionDirector or generated videos, please feel free to open an issue and share them with us. We would greatly appreciate it.
+If you have a more impressive Motion4D or generated videos, please feel free to open an issue and share them with us. We would greatly appreciate it.
 Improvements to the code are also highly welcome.
 
-Please refer to [Project Page](https://showlab.github.io/MotionDirector) for more results.
+Please refer to [Project Page](https://showlab.github.io/Motion4D) for more results.
 
 
 
 ## Shoutouts
 
 - This code builds on [diffusers](https://github.com/huggingface/diffusers), [Tune-a-video](https://github.com/showlab/Tune-A-Video) and [Text-To-Video-Finetuning](https://github.com/ExponentialML/Text-To-Video-Finetuning). Thanks for open-sourcing!
-- Thanks to [camenduru](https://twitter.com/camenduru) for the [colab demo](https://github.com/camenduru/MotionDirector-colab).
-- Thanks to [yhyu13](https://github.com/yhyu13) for the [Huggingface Repo](https://huggingface.co/Yhyu13/MotionDirector_LoRA).
+- Thanks to [camenduru](https://twitter.com/camenduru) for the [colab demo](https://github.com/camenduru/Motion4D-colab).
+- Thanks to [yhyu13](https://github.com/yhyu13) for the [Huggingface Repo](https://huggingface.co/Yhyu13/Motion4D_LoRA).
 - We would like to thank [AK(@_akhaliq)](https://twitter.com/_akhaliq?lang=en) and huggingface team for the help of setting up oneline gradio demo.
 - Thanks to [MagicAnimate](https://github.com/magic-research/magic-animate/) for the gradio demo template.
 - Thanks to [deepbeepmeep](https://github.com/deepbeepmeep), and [XiaominLi](https://github.com/XiaominLi1997) for improving the code.
@@ -367,7 +367,7 @@ python main_4d.py --config configs/4d_c4d.yaml input=data/CONSISTENT4D_DATA/in-t
 
 ## Acknowledgement
 ## Note
-This project contains two stage of text to 4D generation. The first stage T2V is modified from motionderector. The second stage is intensively reconstructed from Dreamgaussian4D. We appreaciate it for their great effort. 
+This project contains two stage of text to 4D generation. The first stage T2V is modified from motionderector. The second stage is intensively reconstructed from Motion4D. We appreaciate it for their great effort. 
 This work is built on many amazing research works and open-source projects, thanks a lot to all the authors for sharing!
 * [4DGaussians](https://github.com/hustvl/4DGaussians)
 * [DreamGaussian](https://github.com/dreamgaussian/dreamgaussian)

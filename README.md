@@ -2,85 +2,99 @@
 
 ## Abstract
 
-As multi-view 3D generation technology advancing, the extension of 3D generation into the 4D has emerged as a significant research. Existing approaches that render videos frame by frame and subsequently assemble them into 3D objects often fail to incorporate inter-frame constraints, leading to temporal inconsistencies in the generated 4D scenes. Moreover, the spatial inconsistencies commonly observed in multi-view generation are further amplified in 4D generation tasks.
-To address these challenges, we introduce a framework, Motion4D, designed to generate highly consistent 4D scenes from textual input, while optimizing generation quality through the enhancement of motion amplitude. This framework combines spatio-temporal slicing method for 4D scenes with 4D Gaussian rendering, enabling the precise capture of motion information across multiple temporal dimensions. To improve sampling flexibility, we also developed a spatio-temporal sliding window sampling method, which effectively capture multi-scale features, with the window size dynamically adjusted at various scales. 
+As multi-view 3D generation technology advances, the extension of 3D generation into 4D has emerged as significant research. Existing approaches that render videos frame by frame and subsequently assemble them into 3D objects often fail to incorporate inter-frame constraints, leading to temporal inconsistencies in the generated 4D scenes. Moreover, the spatial inconsistencies commonly observed in multi-view generation are further amplified in 4D generation tasks.
+
+To address these challenges, we introduce a framework, Motion4D, designed to generate highly consistent 4D scenes from textual input, while optimizing generation quality through the enhancement of motion amplitude. This framework combines spatio-temporal slicing methods for 4D scenes with 4D Gaussian rendering, enabling the precise capture of motion information across multiple temporal dimensions. To improve sampling flexibility, we also developed a spatio-temporal sliding window sampling method, which effectively captures multi-scale features, with the window size dynamically adjusted at various scales.
+
 Furthermore, the 4D-Rotor Gaussian Splatting technique effectively encodes both spatial and temporal features into a more compact Gaussian point cloud representation. It enhances the precision of the generated data and provides a more detailed representation of motion amplitude, thus addressing the motion distortion issues commonly encountered in existing methods. Empirical results demonstrate that Motion4D significantly improves the authenticity and consistency of generated content in text-to-4D generation tasks, particularly in terms of motion representation and spatiotemporal coherence. This advancement achieves superior generation quality compared to conventional approaches.
 
 ## Method
 
 The T24D training pipeline utilizes a 4D diffusion process to generate temporally and spatially consistent animations. The pipeline begins with two primary datasets: a "Motion Dataset," which contains moving objects, and a "T24D Dataset" consisting of multi-view images of objects (e.g., horses or dinosaurs) paired with corresponding textual descriptions such as "A horse is running." To achieve diverse perspectives, the T24D Dataset is sampled across multiple views (front, side, overhead). The input is then processed by introducing noise, which is iteratively refined through the pipeline from \( Z_{n-1} \) to \( Z_n \), while incorporating view-conditioned information from the T24D samples. During diffusion training, the model uses CLIP (Contrastive Language–Image Pretraining) for text-image alignment and applies several attention mechanisms to enhance spatial and temporal coherence, including frame attention, view attention, Klotski self-attention, and motion-enhancement cross-attention. Spatial and temporal slicing techniques are employed to maintain coherence across frames and views, enabling the model to produce consistent motion dynamics in the generated outputs. This pipeline enables the generation of multi-view animations that align with text descriptions while preserving consistent motion across different perspectives and time steps.
 
-![Method Diagram](./index_files/22.pdf)
-  <td><img src=./index_files/22.png></td>
+![Method Diagram](./index_files/22.png)
+
 ## 4D Generation
 
 ### Examples
 
-#### robot3
+<table>
+  <tr>
+    <td align="center"><b>robot3</b></td>
+    <td align="center"><b>robot1</b></td>
+  </tr>
+  <tr>
+    <td><img src="data/videos/ours/best2/robot3.gif" alt="robot3"></td>
+    <td><img src="data/videos/ours/best2/robot1.gif" alt="robot1"></td>
+  </tr>
+  <tr>
+    <td align="center"><b>alien3</b></td>
+    <td align="center"><b>alien5</b></td>
+  </tr>
+  <tr>
+    <td><img src="data/videos/ours/best2/alien3.gif" alt="alien3"></td>
+    <td><img src="data/videos/ours/best2/alien5.gif" alt="alien5"></td>
+  </tr>
+  <tr>
+    <td align="center"><b>dinosaur4</b></td>
+    <td align="center"><b>dinosaur3</b></td>
+  </tr>
+  <tr>
+    <td><img src="data/videos/ours/best2/dinosaur4.gif" alt="dinosaur4"></td>
+    <td><img src="data/videos/ours/best2/dinosaur3.gif" alt="dinosaur3"></td>
+  </tr>
+  <tr>
+    <td align="center"><b>panda4</b></td>
+    <td align="center"><b>panda1</b></td>
+  </tr>
+  <tr>
+    <td><img src="data/videos/ours/best2/panda4.gif" alt="panda4"></td>
+    <td><img src="data/videos/ours/best2/panda1.gif" alt="panda1"></td>
+  </tr>
+</table>
 
-![robot3](data/videos/ours/best/robot3.mp4)
-
-#### robot1
-
-![robot1](data/videos/ours/best/robot1.mp4)
-
-#### alien3
-
-![alien3](data/videos/ours/best/alien3.mp4)
-
-#### alien5
-
-![alien5](data/videos/ours/best/alien5.mp4)
-
-#### dinosaur4
-
-![dinosaur4](data/videos/ours/best/dinosaur4.mp4)
-
-#### dinosaur3
-
-![dinosaur3](data/videos/ours/best/dinosaur3.mp4)
-
-#### panda4
-
-![panda4](data/videos/ours/best/panda4.mp4)
-
-#### panda1
-
-![panda1](data/videos/ours/best/panda1.mp4)
-
-> **Note:** To play the videos, please ensure the video files are placed in the correct paths as specified.
+> **Note:** To view the animations, please ensure the GIF files are placed in the correct paths as specified.
 
 ## Comparisons with Motion4D
 
 ### a volcano erupts
 
-**Motion4D**
-
-![Motion4D - Volcano](data/videos/ours/it50000-test-middlemotion2.mp4)
-
-**Ours**
-
-![Ours - Volcano](data/videos/ours/it50000-test-largemotion1.mp4)
+<table>
+  <tr>
+    <td align="center"><b>Dreamgaussian4D</b></td>
+    <td align="center"><b>Ours</b></td>
+  </tr>
+  <tr>
+    <td><img src="data/videos/ours/compare2/it50000-test-middlemotion2.gif" alt="Dreamgaussian4D - Volcano"></td>
+    <td><img src="data/videos/ours/compare2/it50000-test-largemotion1.gif" alt="Ours - Volcano"></td>
+  </tr>
+</table>
 
 ### a panda is lifting weights
 
-**Motion4D**
-
-![Motion4D - Panda](data/videos/ours/panda-it100000-test.mp4)
-
-**Ours**
-
-![Ours - Panda](data/videos/ours/panda3.mp4)
+<table>
+  <tr>
+    <td align="center"><b>Dreamgaussian4D</b></td>
+    <td align="center"><b>Ours</b></td>
+  </tr>
+  <tr>
+    <td><img src="data/videos/ours/compare2/panda-it100000-test.gif" alt="Dreamgaussian4D - Panda"></td>
+    <td><img src="data/videos/ours/compare2/panda3.gif" alt="Ours - Panda"></td>
+  </tr>
+</table>
 
 ### a dinosaur is running
 
-**Motion4D**
-
-![Motion4D - Dinosaur](data/videos/ours/it20000-test-smallmotion1.mp4)
-
-**Ours**
-
-![Ours - Dinosaur](data/videos/ours/dinousaurrunning.mp4)
+<table>
+  <tr>
+    <td align="center"><b>Dreamgaussian4D</b></td>
+    <td align="center"><b>Ours</b></td>
+  </tr>
+  <tr>
+    <td><img src="data/videos/ours/compare2/it20000-test-smallmotion1.gif" alt="Dreamgaussian4D - Dinosaur"></td>
+    <td><img src="data/videos/ours/compare2/dinousaurrunning.gif" alt="Ours - Dinosaur"></td>
+  </tr>
+</table>
 
 ## Acknowledgments
 
@@ -89,21 +103,13 @@ Website template from [DreamFusion](https://dreamfusion3d.github.io/) and [MVDre
 
 
 
-
-
-
-
-
-
-
-
 ## Viusal Effects
 ### Displayments of the Motion4D Models
-Just open the file index.html to view the visual effects and introduction.
+Just open the file index.html to view the visual effects and introduction. The videos are restored in ./data.
 
 
 
-## Setup
+## stage one Setup
 ### Requirements
 
 ```shell
@@ -233,14 +239,9 @@ Run the following command.
 ```bash
 python Motion4D_inference_multi.py --model /path/to/the/ZeroScope  --prompt "A Terracotta Warrior is riding a horse through an ancient battlefield." --spatial_path_folder ./outputs/train/customized_appearance/terracotta_warrior/checkpoint-default/spatial/lora --temporal_path_folder ./outputs/train/riding_horse/checkpoint-default/temporal/lora/ --noise_prior 0. --seed 1455028
 ```
-Results are shown in the [table](#customize-both-appearance-and-motion-).
 
-## More results
 
-If you have a more impressive Motion4D or generated videos, please feel free to open an issue and share them with us. We would greatly appreciate it.
-Improvements to the code are also highly welcome.
 
-Please refer to [Project Page](https://showlab.github.io/Motion4D) for more results.
 
 
 
@@ -257,7 +258,7 @@ Please refer to [Project Page](https://showlab.github.io/Motion4D) for more resu
 
 
 
-## Install
+## stage two Install
 ```bash
 # python 3.10 cuda 11.8 
 conda create -n dg4d python=3.10 -y && conda activate dg4d

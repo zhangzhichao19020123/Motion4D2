@@ -1,18 +1,16 @@
-# Motion4D: High-Consistency Text-to-4D Generation with Enhanced Motion Amplitude
+# Motion4D: Motion4D: Text-to-4D Generation with Five-Layer Residual Attention and Klotski Sampling
 
 ## Abstract
 
-As multi-view 3D generation technology advances, the extension of 3D generation into 4D has emerged as significant research. Existing approaches that render videos frame by frame and subsequently assemble them into 3D objects often fail to incorporate inter-frame constraints, leading to temporal inconsistencies in the generated 4D scenes. Moreover, the spatial inconsistencies commonly observed in multi-view generation are further amplified in 4D generation tasks.
-
-To address these challenges, we introduce a framework, Motion4D, designed to generate highly consistent 4D scenes from textual input, while optimizing generation quality through the enhancement of motion amplitude. This framework combines spatio-temporal slicing methods for 4D scenes with 4D Gaussian rendering, enabling the precise capture of motion information across multiple temporal dimensions. To improve sampling flexibility, we also developed a spatio-temporal sliding window sampling method, which effectively captures multi-scale features, with the window size dynamically adjusted at various scales.
-
-Furthermore, the 4D-Rotor Gaussian Splatting technique effectively encodes both spatial and temporal features into a more compact Gaussian point cloud representation. It enhances the precision of the generated data and provides a more detailed representation of motion amplitude, thus addressing the motion distortion issues commonly encountered in existing methods. Empirical results demonstrate that Motion4D significantly improves the authenticity and consistency of generated content in text-to-4D generation tasks, particularly in terms of motion representation and spatiotemporal coherence. This advancement achieves superior generation quality compared to conventional approaches.
+We present Motion4D, a novel framework for text-to-4D (T24D) generation that addresses the challenges of maintaining spatiotemporal coherence, high fidelity, and computational efficiency in dynamic 3D scene generation. Our approach introduces a five-layer residual attention mechanism that explicitly models spatial, temporal, and cross-modal relationships, enabling accurate and efficient 4D content generation. By leveraging Klotski sampling and dynamic matrix decomposition, we achieve high-quality 4D animations while significantly reducing computational overhead.
+The primary contributions of this work are threefold: (1) a comprehensive analysis of current 4D generation methods across different input modalities, highlighting their strengths and limitations; (2) a novel five-layer residual attention mechanism that effectively captures viewpoint-time couplings, high-dimensional attention patterns, and multimodal condition fusion; and (3) an innovative Klotski sampling strategy that enables efficient matrix decomposition and localized attention computation, facilitating any-to-any 4D generation.
+Extensive experimental results demonstrate the superiority of our approach in terms of spatiotemporal consistency, computational efficiency, and text alignment accuracy. Our framework outperforms state-of-the-art methods in generating complex dynamic scenes while preserving visual consistency across timestamps. This work opens new possibilities for applications in animation, gaming, virtual reality, and other domains requiring immersive, dynamic 3D experiences.
 
 ## Method
 
 The T24D training pipeline utilizes a 4D diffusion process to generate temporally and spatially consistent animations. The pipeline begins with two primary datasets: a "Motion Dataset," which contains moving objects, and a "T24D Dataset" consisting of multi-view images of objects (e.g., horses or dinosaurs) paired with corresponding textual descriptions such as "A horse is running." To achieve diverse perspectives, the T24D Dataset is sampled across multiple views (front, side, overhead). The input is then processed by introducing noise, which is iteratively refined through the pipeline from \( Z_{n-1} \) to \( Z_n \), while incorporating view-conditioned information from the T24D samples. During diffusion training, the model uses CLIP (Contrastive Language–Image Pretraining) for text-image alignment and applies several attention mechanisms to enhance spatial and temporal coherence, including frame attention, view attention, Klotski self-attention, and motion-enhancement cross-attention. Spatial and temporal slicing techniques are employed to maintain coherence across frames and views, enabling the model to produce consistent motion dynamics in the generated outputs. This pipeline enables the generation of multi-view animations that align with text descriptions while preserving consistent motion across different perspectives and time steps.
 
-![Method Diagram](./index_files/22.png)
+![Method Diagram](./index_files/network250220.png)
 
 ## 4D Generation
 
@@ -155,7 +153,7 @@ python Motion4D_train.py --config ./configs/config_single_video.yaml
 Note:  
 - Before running the above command, 
 make sure you replace the path to foundational model weights and training data with your own in the config files `config_multi_videos.yaml` or `config_single_video.yaml`.
-- Generally, training on multiple 16-frame videos usually takes `300~500` steps, about `9~16` minutes using one A5000 GPU. Training on a single video takes `50~150` steps, about `1.5~4.5` minutes using one A5000 GPU. The required VRAM for training is around `14GB`.
+- Generally, training on multiple 16-frame videos usually takes `300~500` steps, about `9~16` minutes using 1-8 A100 GPUs. Training on a single video takes `50~150` steps, about `1.5~4.5` minutes using one A100 GPU. The required VRAM for training is around `14GB`.
 - Reduce `n_sample_frames` if your GPU memory is limited.
 - Reduce the learning rate and increase the training steps for better performance.
 
